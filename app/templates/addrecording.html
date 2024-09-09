@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/index.css">
+    </head>
+    <body>
+        <div class="header">
+            <h1>Song matcher</h1>
+        </div>
+        <div class="row">
+            <div class="col-3 col-s-3 menu">
+                <ul>
+                    <li class="font-bold-large"><a href="/">Search</a></li>
+                    <li class="font-bold-large"><a href="/addwork">Add audio</a></li>
+                    <li class="active font-bold-large">Register work</li>
+                    <li class="inactive font-bold-large"><!--a href="/search_fp"-->Search by fingerprint</li>
+                    <li class="inactive font-bold-large"><!--a href="/addwork_fp"-->Add work to fingerprint-DB</li>
+                    <li class="font-bold-large"><a href="/user">User</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-s-9">
+                <h1>Register work</h1>
+                <div class="m-form">
+                    <form action="/addrecording" method="POST" name="new_recording">
+                        <label for="stitle">Song title:</label>
+                        <input type="text" id="stitle" name="stitle" value="{{ stitle }}"><br>
+                        <label for="sartist">Artist:</label>
+                        <input type="text" id="sartist" name="sartist" value="{{ sartist }}"><br>
+                        <input class="font-bold-large" type="submit" value="Create">
+                    </form>
+                </div>
+                <h1>Register artist</h1>
+                <div class="m-form">
+                    <form action="/addartist" method="POST" name="new_artist">
+                        <label for="sartist">Artist:</label>
+                        <input type="text" id="sartist" name="sartist" value="{{ sartist }}"><br>
+                        <input class="font-bold-large" type="submit" value="Create">
+                    </form>
+                </div>
+                {% include "messages.html" %}
+            </div>
+        </div>
+    </body>
+</html>
+
+

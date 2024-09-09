@@ -1,0 +1,11 @@
+{% if ret_msg %}
+    {% for msg in ret_msg %}
+        {% if msg.mtype == "I" %}
+        <div class="resultMessage font-bold-large">
+        {% else %}
+        <div class="errorMessage font-bold-large">
+        {% endif %}
+            <p>{{ msg.message }}</p>
+        </div>
+    {% endfor %}
+{% endif %}

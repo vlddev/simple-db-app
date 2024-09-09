@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/index.css">
+    </head>
+    <body>
+        <div class="header">
+            <h1>Song matcher</h1>
+        </div>
+        <div class="row">
+            <div class="col-3 col-s-3 menu">
+                <ul>
+                    <li class="font-bold-large"><a href="/">Search</a></li>
+                    <li class="active font-bold-large">Add audio</li>
+                    <li class="font-bold-large"><a href="/addrecording">Register work</a></li>
+                    <li class="inactive font-bold-large"><!--a href="/search_fp"-->Search by fingerprint</li>
+                    <li class="inactive font-bold-large"><!--a href="/addwork_fp"-->Add work to fingerprint-DB</li>
+                    <li class="font-bold-large"><a href="/user">User</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-s-9">
+                <h1>Add audio</h1>
+                <h2>Search work</h2>
+                <div class="m-form">
+                    <form method="POST">
+                        <label for="stitle">Song title:</label>
+                        <input type="text" id="stitle" name="stitle" value="{{ stitle }}"><br>
+                        <label for="sartist">Band/Artist:</label>
+                        <input type="text" id="sartist" name="sartist" value="{{ sartist }}"><br>
+                        <input class="font-bold-large" type="submit" value="Search">
+                    </form>
+                </div>
+                {% if query_content %}
+                <h2>Query:</h2>
+                <b>{{ query_content }}</b>
+                {% endif %}
+                {% include "messages.html" %}
+                {% if resultList %}
+                <h2>Results:</h2>
+                <form action="/upload_cqt_work" method="POST" enctype="multipart/form-data">
+                    <table class="resultTable">
+                        <tr class="resultRow">
+                            <th class="resultRow">Id</th>
+                            <th class="resultRow">Title</th>
+                            <th class="resultRow">Artist</th>
+                            <th class="resultRow">has work in CQT-DB</th>
+                        </tr>
+                        {% for elem in resultList %}
+                        <tr class="resultRow">
+                            <td class="resultRow">
+                                <input type="radio" id="radio-{{ elem.id }}" name="recording_id" value="{{ elem.id }}" />
+                            </td>
+                            <td class="resultRow">{{ elem.title }}</td>
+                            <td class="resultRow">
+                            {% for artist in elem.artists %}
+                                {% if artist.role == "B" %}
+                                <b>{{ artist.name }}</b>
+                                {% else %}
+                                {{ artist.name }}
+                                {% endif %}
+                                <br>
+                            {% endfor %}
+                            </td>
+                            <td class="resultRow">{{ elem.has_recording }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <label for="wfile">Audio:</label>
+                    <input type="file" id="wfile" name="wfile"><br>
+                    <input class="font-bold-large" type="submit" value="Add work">
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </body>
+</html>
+
+

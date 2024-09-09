@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/index.css">
+    </head>
+    <body>
+        <div class="header">
+            <h1>Song matcher</h1>
+        </div>
+        <div class="row">
+            <div class="col-3 col-s-3 menu">
+                <ul>
+                    <li class="font-bold-large"><a href="/">Search</a></li>
+                    <li class="font-bold-large"><a href="/addwork">Add audio</a></li>
+                    <li class="font-bold-large"><a href="/addrecording">Register work</a></li>
+                    <li class="inactive font-bold-large"><!--a href="/search_fp"-->Search by fingerprint</li>
+                    <li class="inactive font-bold-large"><!--a href="/addwork_fp"-->Add work to fingerprint-DB</li>
+                    <li class="active font-bold-large">User</li>
+                </ul>
+            </div>
+            <div class="col-6 col-s-9">
+                <h1>User</h1>
+                {% if user %}
+                <h2>Logged in as: {{ user }}</h2>
+                <div class="m-form">
+                    <form method="POST">
+                        <input type="hidden" id="logout" name="logout" value="true"><br>
+                        <input class="font-bold-large" type="submit" value="Logout">
+                    </form>
+                </div>
+                {% else %}
+                <h2>Not logged in</h2>
+                <div class="m-form">
+                    <form method="POST">
+                        <label for="username">User:</label>
+                        <input type="text" id="username" name="username" value="{{ username }}"><br>
+                        <label for="userkey">Password:</label>
+                        <input type="text" id="userkey" name="userkey" value="{{ userkey }}"><br>
+                        <input class="font-bold-large" type="submit" value="Login">
+                    </form>
+                </div>
+                {% endif %}
+                {% include "messages.html" %}
+                {% if contractList %}
+                <h2>User contracts:</h2>
+                <table class="resultTable">
+                    <tr class="resultRow">
+                        <th class="resultRow">Title</th>
+                        <th class="resultRow">Artist</th>
+                        <th class="resultRow">created</th>
+                    </tr>
+                    {% for elem in contractList %}
+                    <tr class="resultRow">
+                        <td class="resultRow">{{ elem.recording.title }}</td>
+                        <td class="resultRow">
+                        {% for artist in elem.recording.artists %}
+                            {% if artist.role == "B" %}
+                            <b>{{ artist.name }}</b>
+                            {% else %}
+                            {{ artist.name }}
+                            {% endif %}
+                            <br>
+                        {% endfor %}
+                        </td>
+                        <td class="resultRow">{{ elem.created }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+            </div>
+        </div>
+    </body>
+</html>
+
+

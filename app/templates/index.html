@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/index.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="header">
+            <h1>Song matcher</h1>
+        </div>
+        <div class="row">
+            <div class="col-3 col-s-3 menu">
+                <ul>
+                    <li class="active font-bold-large">Search</li>
+                    <li class="font-bold-large"><a href="/addwork">Add audio</a></li>
+                    <li class="font-bold-large"><a href="/addrecording">Register work</a></li>
+                    <li class="inactive font-bold-large"><!--a href="/search_fp"-->Search by fingerprint</li>
+                    <li class="inactive font-bold-large"><!--a href="/addwork_fp"-->Add work to fingerprint-DB</li>
+                    <li class="font-bold-large"><a href="/user">User</a></li>
+                </ul>
+            </div>
+  
+            <div class="col-6 col-s-9">
+                <h1>Search book</h1>
+                <div class="m-form">
+                    <form method="POST" enctype="multipart/form-data">
+                        <label for="btitle">Title:</label>
+                        <input type="text" id="btitle" name="btitle" value="{{ btitle }}"><br>
+                        <input class="font-bold-large" type="submit" value="Search">
+                    </form>
+                </div>
+                {% if query_content %}
+                <h2>Query:</h2>
+                <b>{{ query_content }}</b>
+                {% endif %}
+                {% include "messages.html" %}
+                {% if resultList %}
+                <h2>Results:</h2>
+                <table class="resultTable">
+                    <tr class="resultRow">
+                        <th class="resultRow">id</th>
+                        <th class="resultRow">Title</th>
+                        <th class="resultRow">publish_date</th>
+                        <th class="resultRow">lang</th>
+                        <th class="resultRow">note</th>
+                    </tr>
+                    {% for elem in resultList %}
+                    <tr class="resultRow">
+                        <td class="resultRow">{{ elem.id }}</td>
+                        <td class="resultRow">{{ elem.title }}</td>
+                        <td class="resultRow">{{ elem.publish_date }}</td>
+                        <td class="resultRow">{{ elem.lang }}</td>
+                        <td class="resultRow">{{ elem.note }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+            </div>
+        </div>
+    </body>
+</html>
+
+
