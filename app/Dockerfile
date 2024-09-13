@@ -3,9 +3,9 @@ FROM python:3.10-alpine AS build
 
 RUN apk add build-base libpq libpq-dev
 
-COPY ./requirements.txt ./
+COPY requirements.txt ./
 
-RUN pip3 install --no-cache-dir -r ./requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 FROM python:3.10-alpine AS final
 
